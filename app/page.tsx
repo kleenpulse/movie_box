@@ -1,12 +1,14 @@
+"use client";
 import FeaturedMovies from "@/components/FeaturedMovies";
 import { Hero } from "@/components/Hero";
-import { Nav } from "@/components/Nav";
 
 export default function Home() {
 	return (
-		<main className="">
+		<main>
 			<Hero />
-			<FeaturedMovies />
+			<section className=" flex justify-center w-full">
+				<FeaturedMovies />
+			</section>
 		</main>
 	);
 }
