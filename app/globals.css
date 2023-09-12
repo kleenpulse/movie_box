@@ -6,6 +6,10 @@
 	max-width: 1440px;
 }
 
+body {
+	overflow-x: hidden;
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 }

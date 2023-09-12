@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const Hero = () => {
 	return (
-		<section className="bg-hero-bg w-full xl:h-screen h-[37.5rem] bg-cover bg-no-repeat flex flex-col items-center px-8 xl:bg-center">
+		<section className="bg-hero-bg w-full xl:h-screen h-[37.5rem] bg-cover bg-no-repeat flex flex-col items-center px-8 xl:bg-center pt-4">
 			<Nav />
 			<div className="max-container flex w-full justify-between items-center h-full">
 				<div className="flex flex-col items-start w-full max-w-[500px] ">
