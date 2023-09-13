@@ -1,5 +1,5 @@
 "use client";
-import { formatMonthAndYear } from "@/constants/formatDate";
+import { formatMonthAndYear } from "@/constants/formatter";
 import { genres } from "@/constants/genres";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

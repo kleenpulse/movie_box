@@ -58,3 +58,28 @@ export function formatHoursAndMinutes(minutes: number): string {
 		return hoursText || minutesText || "0m"; // Return '0m' if no hours or minutes
 	}
 }
+
+export function formatCurrencyUSD(amount: number): string {
+	let formattedAmount: string;
+
+	// format Millions
+	if (amount >= 10000000) {
+		formattedAmount = `${(amount / 10000000).toFixed(1)}M`;
+	} else if (amount >= 1000000) {
+		formattedAmount = `${(amount / 1000000).toFixed(1)}M`;
+	}
+
+	// format Thousands
+	else if (amount >= 1000) {
+		formattedAmount = `${(amount / 1000).toFixed(1)}K`;
+	} else {
+		formattedAmount = `${amount.toFixed(0)}`;
+	}
+
+	// Check for decimals
+	formattedAmount = formattedAmount
+		.replace(/\.0M$/i, "M")
+		.replace(/\.0k$/i, "K");
+
+	return formattedAmount;
+}

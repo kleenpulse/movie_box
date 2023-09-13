@@ -5,29 +5,35 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import LoadingAnimation from "./LoadingAnimation";
 
+const baseUrl = "http://image.tmdb.org/t/p";
 export default function FeaturedMovies() {
 	const [movies, setMovies] = useState([]);
 
-	const baseUrl = "http://image.tmdb.org/t/p";
-	const options = {
-		method: "GET",
-		url: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-		headers: {
-			accept: "application/json",
-			Authorization:
-				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZmU1MTY1MGM1NDA5NzcwYTEyNjAzMWQwOThhMzhlZCIsInN1YiI6IjY0ZmVjOTU1MmRmZmQ4MDEwMDE0M2NjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tV56ctRSvA8CFDGcEXB6v5GbJ20opdUx-eQ5t-Bge3Y",
-		},
-	};
 	useEffect(() => {
-		axios
-			.request(options)
-			.then(function (response) {
-				console.log(response.data);
-				setMovies(response.data.results);
-			})
-			.catch(function (error) {
+		const options = {
+			method: "GET",
+			url: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+			headers: {
+				accept: "application/json",
+				Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEBOX_API_KEY}`,
+			},
+		};
+		const fetchDetails = async () => {
+			try {
+				await axios
+					.request(options)
+					.then(function (response) {
+						console.log(response.data);
+						setMovies(response.data.results);
+					})
+					.catch(function (error) {
+						console.error(error);
+					});
+			} catch (error) {
 				console.error(error);
-			});
+			}
+		};
+		fetchDetails();
 	}, []);
 
 	return (

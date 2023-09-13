@@ -16,8 +16,7 @@ export default function FeaturedMovies() {
 		url: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
 		headers: {
 			accept: "application/json",
-			Authorization:
-				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZmU1MTY1MGM1NDA5NzcwYTEyNjAzMWQwOThhMzhlZCIsInN1YiI6IjY0ZmVjOTU1MmRmZmQ4MDEwMDE0M2NjMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tV56ctRSvA8CFDGcEXB6v5GbJ20opdUx-eQ5t-Bge3Y",
+			Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEBOX_API_KEY}`,
 		},
 	};
 	useEffect(() => {
