@@ -63,10 +63,10 @@ export function formatCurrencyUSD(amount: number): string {
 	let formattedAmount: string;
 
 	// format Millions
-	if (amount >= 10000000) {
-		formattedAmount = `${(amount / 10000000).toFixed(1)}M`;
-	} else if (amount >= 1000000) {
+	if (amount >= 1000000) {
 		formattedAmount = `${(amount / 1000000).toFixed(1)}M`;
+	} else if (amount >= 100000) {
+		formattedAmount = `${(amount / 100000).toFixed(1)}M`;
 	}
 
 	// format Thousands

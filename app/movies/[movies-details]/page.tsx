@@ -17,7 +17,7 @@ export async function generateMetadata({
 	searchParams: { title: string };
 }): Promise<Metadata> {
 	return {
-		title: `Movie | ${searchParams.title}`,
+		title: `${searchParams.title}`,
 	};
 }
 
@@ -114,7 +114,7 @@ export default async function FeaturedMovies({
 							/> */}
 						</div>
 						<div className="flex justify-between items-center mt-6 w-full">
-							<div className="flex gap-2 font-medium text-gray-700 text-[20px]">
+							<div className="flex gap-2 font-medium text-gray-700 xl:text-[20px]">
 								<p className="">{movieData.title}</p>•
 								<p>{formatMonthAndYear(movieData.release_date, true)}</p>•
 								<p>{movieData.adult ? "18+" : "PG-13"}</p>•
@@ -146,8 +146,8 @@ export default async function FeaturedMovies({
 							</p>
 						</div>
 
-						<div className="flex  justify-between w-full mt-10">
-							<div className="text-gray-900 text-lg tracking-wide flex flex-col items-start  gap-6 w-full max-w-[60%] my-10">
+						<div className=" flex max-lg:flex-col  justify-between w-full mt-10">
+							<div className="text-gray-900 text-lg tracking-wide flex flex-col items-start   gap-6 w-full lg:max-w-[60%] my-10">
 								<p>{movieData.overview}</p>
 								<p>
 									{movieData.directors.length > 1

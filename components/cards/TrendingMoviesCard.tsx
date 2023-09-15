@@ -25,8 +25,8 @@ export default async function TrendingMoviesCard() {
 
 	const month = months[new Date().getUTCMonth()];
 	return (
-		<div className="flex h-[400px] p-4 w-full">
-			<div className="flex h-[229px] w-full min-w-[360px] rounded-xl overflow-hidden gap-1 relative">
+		<div className="flex h-[400px] max-lg:h-[500px] p-4 w-full ">
+			<div className="flex h-[229px] w-full min-w-[360px] max-lg:justify-center rounded-xl overflow-hidden gap-1 relative">
 				{trending.slice(0, 3).map((movie: any) => (
 					<Image
 						key={movie.id}
@@ -38,7 +38,7 @@ export default async function TrendingMoviesCard() {
 						className={`object-cover`}
 					/>
 				))}
-				<p className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/50 backdrop-blur-xl w-[95%] text-gray-100 p-2 flex items-center">
+				<p className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/50 backdrop-blur-xl w-[95%] text-gray-100 p-2 flex items-center max-lg:w-full max-lg:justify-center">
 					<Image
 						src={listIcon}
 						width={20}
