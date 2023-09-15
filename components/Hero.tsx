@@ -69,7 +69,7 @@ export const Hero = () => {
 					height={
 						windowSize > 1279
 							? "900px"
-							: "700px"
+							: "900px"
 							? windowSize >= 700
 								? "700px"
 								: "700px"
