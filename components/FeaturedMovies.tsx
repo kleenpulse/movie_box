@@ -1,50 +1,24 @@
-import axios from "axios";
 import { MovieCard } from "./cards/MovieCard";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import LoadingAnimation from "./LoadingAnimation";
+import LoadingAnimation from "./loaders/LoadingAnimation";
+import { fetchFeaturedMovies } from "@/app/api/data-fetcher";
+import { Foobar } from "./Foobar";
 
 const baseUrl = "http://image.tmdb.org/t/p";
-export default function FeaturedMovies() {
-	const [movies, setMovies] = useState([]);
-
-	useEffect(() => {
-		const options = {
-			method: "GET",
-			url: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-			headers: {
-				accept: "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEBOX_API_KEY}`,
-			},
-		};
-		const fetchDetails = async () => {
-			try {
-				await axios
-					.request(options)
-					.then(function (response) {
-						console.log(response.data);
-						setMovies(response.data.results);
-					})
-					.catch(function (error) {
-						console.error(error);
-					});
-			} catch (error) {
-				console.error(error);
-			}
-		};
-		fetchDetails();
-	}, []);
+export default async function FeaturedMovies() {
+	const data = await fetchFeaturedMovies(true);
+	const movies = data.results;
 
 	return (
 		<section className="max-container pt-6 px-6 xl:px-12 min-h-screen w-full flex justify-center items-center flex-col pb-6">
 			<div className="flex w-full justify-between items-center">
-				<p className="font-bold text-[2.25rem] text-slate-800 ">
+				<p className="font-bold text-[22px] uppercase sm:text-[2.25rem] text-slate-800 ">
 					Featured Movies
 				</p>
 				<Link
 					href={"/movies"}
-					className="flex items-center gap-2 text-rose-700  text-[1.25rem]"
+					className="flex items-center gap-2 text-rose-700  sm:text-[1.25rem] max-sm:bg-white rounded-full  p-1 max-sm:font-bold max-sm:hover:bg-rose-700 max-sm:hover:text-white max-sm:border border-rose-700 transition-all duration-200 text-sm"
 				>
 					See more <span>&gt;</span>
 				</Link>
@@ -53,7 +27,7 @@ export default function FeaturedMovies() {
 			{!movies ? (
 				<LoadingAnimation text="Loading Movies..." />
 			) : (
-				<div className=" pl-3  mt-12 grid grid-cols-1 gap-6  lg:gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 relative w-full">
+				<div className=" mt-4 py-2 flex flex-wrap gap-6 md:gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  relative w-full justify-center ">
 					{movies.slice(0, 10).map((movie: any) => (
 						<MovieCard
 							key={movie.id}

@@ -1,10 +1,4 @@
-"use client";
-import axios from "axios";
-
-import { useEffect, useState } from "react";
-import Link from "next/link";
-
-import LoadingAnimation from "@/components/LoadingAnimation";
+import LoadingAnimation from "@/components/loaders/LoadingAnimation";
 import { Sidebar } from "@/components/Sidebar";
 
 import Image from "next/image";
@@ -13,32 +7,68 @@ import {
 	formatHoursAndMinutes,
 	formatMonthAndYear,
 } from "@/constants/formatter";
-import { TrendingMoviesCard } from "@/components/cards/TrendingMoviesCard";
+import TrendingMoviesCard from "@/components/cards/TrendingMoviesCard";
+import { fetchFilmDetails } from "@/app/api/data-fetcher";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+	searchParams,
+}: {
+	searchParams: { title: string };
+}): Promise<Metadata> {
+	return {
+		title: `Movie | ${searchParams.title}`,
+	};
+}
 
 const baseUrl = "http://image.tmdb.org/t/p";
-export default function FeaturedMovies({
-	searchParams: { movieId },
+export default async function FeaturedMovies({
+	searchParams,
 }: {
 	searchParams: { movieId: string };
 }) {
-	const [movieData, setMovieData] = useState({
-		poster: "",
-		title: "",
-		release_date: "",
-		rotten_tomatoes: "",
-		location: "",
-		overview: "",
-		imdb: 0,
-		runtime: "",
-		genres: [],
-		adult: false,
-		vote_count: 0,
-		budget: 0,
-		revenue: 0,
-		directors: [],
-		writers: [],
-		stars: [],
-	});
+	const { movieId } = searchParams;
+
+	const data = await fetchFilmDetails(movieId, true);
+
+	const movieData = {
+		revenue: data.revenue,
+		poster: `${baseUrl}/original${data.backdrop_path}`,
+		title: data.title,
+		release_date: data.release_date,
+		rotten_tomatoes: data.rotten_tomatoes,
+		location: data.production_countries[0].name,
+		overview: data.overview,
+		imdb: data.vote_average,
+		runtime: data.runtime,
+		genres: data.genres,
+		adult: data.adult,
+		vote_count: data.vote_count,
+		budget: data.budget,
+		directors: data.credits.crew.filter(
+			(crew: { known_for_department: string; job: string }) =>
+				crew.known_for_department === "Directing" && crew.job === "Director"
+		),
+		writers: data.credits.crew.filter(
+			(crew: { department: string; job: string }) =>
+				crew.department === "Writing"
+		),
+		stars: data.credits.cast.filter(
+			(cast: {
+				character: string;
+				order: number;
+				known_for_department: string;
+			}) => cast.order <= 3 && cast.known_for_department === "Acting"
+		),
+		trailer: data.videos.results.filter(
+			(video: { type: string; site: string; official: boolean }) =>
+				video.type === "Trailer" &&
+				video.site === "YouTube" &&
+				video.official === true
+		),
+	};
+
+	const youtubeId = movieData.trailer[0].key;
 
 	const seen = new Set();
 	const uniqueWritters = movieData.writers.filter(
@@ -48,77 +78,29 @@ export default function FeaturedMovies({
 			return !duplicate;
 		}
 	);
-	useEffect(() => {
-		const options = {
-			method: "GET",
-			url: `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=credits`,
-			headers: {
-				accept: "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEBOX_API_KEY}`,
-			},
-		};
-		const fetchMovies = async () => {
-			try {
-				await axios
-					.request(options)
-					.then(function (response) {
-						console.log(response.data);
-						setMovieData({
-							revenue: response.data.revenue,
-							poster: `${baseUrl}/original${response.data.backdrop_path}`,
-							title: response.data.title,
-							release_date: response.data.release_date,
-							rotten_tomatoes: response.data.rotten_tomatoes,
-							location: response.data.production_countries[0].name,
-							overview: response.data.overview,
-							imdb: response.data.vote_average,
-							runtime: response.data.runtime,
-							genres: response.data.genres,
-							adult: response.data.adult,
-							vote_count: response.data.vote_count,
-							budget: response.data.budget,
-							directors: response.data.credits.crew.filter(
-								(crew: { known_for_department: string; job: string }) =>
-									crew.known_for_department === "Directing" &&
-									crew.job === "Director"
-							),
-							writers: response.data.credits.crew.filter(
-								(crew: { department: string; job: string }) =>
-									crew.department === "Writing"
-							),
-							stars: response.data.credits.cast.filter(
-								(cast: {
-									character: string;
-									order: number;
-									known_for_department: string;
-								}) => cast.order <= 3 && cast.known_for_department === "Acting"
-							),
-						});
-					})
-					.catch(function (error) {
-						console.error(error);
-					});
-			} catch (error) {
-				console.log("ERROR", error);
-			}
-		};
 
-		fetchMovies();
-	}, []);
-	console.log(movieData.writers);
 	return (
 		<main className="w-full flex justify-center items-center relative">
 			<Sidebar />
-			<section className="max-container pt-6 px-6 min-h-screen w-full lg:ml-[226px] flex justify-between items-center flex-col pb-6">
+			<section className="max-container pt-6 px-6 min-h-screen w-full lg:ml-[226px] xl:ml-[300px] flex justify-between items-center flex-col pb-6">
 				{!movieData ? (
 					<div className="flex w-full justify-center items-center flex-col h-screen">
 						<LoadingAnimation text="Loading Movies..." />
 					</div>
 				) : (
 					<div className="flex w-full justify-center items-center flex-col ">
-						<div className="w-full  h-auto ">
-							{/* TODO: Add Video Trail from YT base URL:https://www.youtube.com/watch?v=${movieData.videos.results[0].key} */}
-							<Image
+						<div className="w-full  h-[500px] flex flex-1 justify-center">
+							{!youtubeId ? (
+								<LoadingAnimation text="Loading Trailer..." />
+							) : (
+								<iframe
+									src={`https://www.youtube.com/embed/${youtubeId}`}
+									allowFullScreen
+									title="Embedded YouTube Video"
+									className="rounded-xl lg:object-cover w-full h-auto aspect-video"
+								></iframe>
+							)}
+							{/* <Image
 								src={
 									movieData.poster
 										? movieData.poster
@@ -128,8 +110,8 @@ export default function FeaturedMovies({
 								width={1000}
 								height={500}
 								priority={true}
-								className="rounded-xl object-contain"
-							/>
+								className="rounded-xl lg:object-cover"
+							/> */}
 						</div>
 						<div className="flex justify-between items-center mt-6 w-full">
 							<div className="flex gap-2 font-medium text-gray-700 text-[20px]">
@@ -173,7 +155,12 @@ export default function FeaturedMovies({
 										: "Director: "}
 									{movieData.directors.map(
 										(director: { id: number; name: string }) => (
-											<span key={director.id}>{director.name}</span>
+											<span
+												key={director.id}
+												className="text-rose-700 font-medium"
+											>
+												{director.name}
+											</span>
 										)
 									)}
 								</p>
@@ -186,9 +173,17 @@ export default function FeaturedMovies({
 											uniqueWritters: { id: number; name: string }[]
 										) => {
 											if (index === uniqueWritters.length - 1) {
-												return <span>{writer.name}</span>;
+												return (
+													<span className="text-rose-700 font-medium">
+														{writer.name}
+													</span>
+												);
 											} else {
-												return <span>{writer.name},</span>;
+												return (
+													<span className="text-rose-700 font-medium">
+														{writer.name},
+													</span>
+												);
 											}
 										}
 									)}
@@ -202,9 +197,17 @@ export default function FeaturedMovies({
 											stars: { id: number; name: string }[]
 										) => {
 											if (index === stars.length - 1) {
-												return <span>{star.name}</span>;
+												return (
+													<span className="text-rose-700 font-medium">
+														{star.name}
+													</span>
+												);
 											} else {
-												return <span>{star.name},</span>;
+												return (
+													<span className="text-rose-700 font-medium">
+														{star.name},
+													</span>
+												);
 											}
 										}
 									)}
@@ -212,7 +215,7 @@ export default function FeaturedMovies({
 								<div className="flex gap-4">
 									<p>
 										Budget:
-										<span>
+										<span className="text-blue-700 font-medium">
 											{" "}
 											${formatCurrencyUSD(Number(movieData.budget))}{" "}
 										</span>
@@ -220,10 +223,10 @@ export default function FeaturedMovies({
 									<p>
 										Revenue:
 										<span
-											className={`${
+											className={`font-medium ${
 												movieData.revenue > movieData.budget
-													? "text-green-500"
-													: "text-rose-700"
+													? "text-green-700"
+													: "text-red-700"
 											}`}
 										>
 											{" "}

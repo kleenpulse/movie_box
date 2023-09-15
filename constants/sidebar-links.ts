@@ -1,8 +1,8 @@
-import homeIcon from "../public/assets/Home.png";
-import calendarIcon from "../public/assets/Calendar.png";
-import tvShowIcon from "../public/assets/tv-show.png";
-// import movies from "../public/assets/Movie.png";
+import calendarIcon from "../public/assets/calendar.svg";
+import tvShowIcon from "../public/assets/tv-show.svg";
+
 import videoIcon from "../public/assets/videoIcon.svg";
+import homeIcon from "../public/assets/home-icon.svg";
 import { StaticImageData } from "next/image";
 
 interface SideLinkProps {

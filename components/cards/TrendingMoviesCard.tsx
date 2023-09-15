@@ -1,39 +1,12 @@
-"use client";
-import axios from "axios";
 import Image from "next/image";
 import listIcon from "../../public/assets/list-icon.png";
-import React, { useEffect, useState } from "react";
+import { fetchTrendingMovies } from "@/app/api/data-fetcher";
 
 const baseUrl = "http://image.tmdb.org/t/p";
-export const TrendingMoviesCard = () => {
-	const [trending, setTrending] = useState([]);
+export default async function TrendingMoviesCard() {
+	const data = await fetchTrendingMovies(true);
+	const trending = data.results;
 
-	useEffect(() => {
-		const options = {
-			method: "GET",
-			url: "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-			headers: {
-				accept: "application/json",
-				Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEBOX_API_KEY}`,
-			},
-		};
-		const fetchDetails = async () => {
-			try {
-				await axios
-					.request(options)
-					.then(function (response) {
-						console.log(response.data.results);
-						setTrending(response.data.results);
-					})
-					.catch(function (error) {
-						console.error(error);
-					});
-			} catch (error) {
-				console.error(error);
-			}
-		};
-		fetchDetails();
-	}, []);
 	// list all the months
 	const months = [
 		"January",
@@ -78,4 +51,4 @@ export const TrendingMoviesCard = () => {
 			</div>
 		</div>
 	);
-};
+}

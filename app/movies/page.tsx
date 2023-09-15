@@ -1,35 +1,14 @@
-"use client";
-import axios from "axios";
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MovieCard } from "@/components/cards/MovieCard";
-import LoadingAnimation from "@/components/LoadingAnimation";
+import LoadingAnimation from "@/components/loaders/LoadingAnimation";
 import { Sidebar } from "@/components/Sidebar";
+import { fetchFeaturedMovies } from "../api/data-fetcher";
 
-export default function FeaturedMovies() {
-	const [movies, setMovies] = useState([]);
-
-	const baseUrl = "http://image.tmdb.org/t/p";
-	const options = {
-		method: "GET",
-		url: "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
-		headers: {
-			accept: "application/json",
-			Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIEBOX_API_KEY}`,
-		},
-	};
-	useEffect(() => {
-		axios
-			.request(options)
-			.then(function (response) {
-				console.log(response.data);
-				setMovies(response.data.results);
-			})
-			.catch(function (error) {
-				console.error(error);
-			});
-	}, []);
+const baseUrl = "http://image.tmdb.org/t/p";
+export default async function FeaturedMoviesPage() {
+	const data = await fetchFeaturedMovies(true);
+	const movies = data.results;
 
 	return (
 		<main className="w-full flex justify-center items-center relative">

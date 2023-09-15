@@ -1,5 +1,5 @@
-"use client";
 import FeaturedMovies from "@/components/FeaturedMovies";
+import { Foobar } from "@/components/Foobar";
 import { Hero } from "@/components/Hero";
 
 export default function Home() {
@@ -9,6 +9,7 @@ export default function Home() {
 			<section className=" flex justify-center w-full">
 				<FeaturedMovies />
 			</section>
+			<Foobar />
 		</main>
 	);
 }
