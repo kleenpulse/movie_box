@@ -57,12 +57,12 @@ export const Hero = () => {
 			<div className="relative z-20 w-full">
 				<Nav />
 			</div>
-			<div className="absolute top-0 left-0 w-full h-full  xl:h-[900px] min-[1440px]:h-[900px] h-[500px] sm:h-[700px] max-sm:h-[500px]">
+			<div className="absolute top-0 left-0 w-full  xl:h-[900px] min-[1440px]:h-[900px] h-[500px] sm:h-[700px] max-sm:h-[500px]">
 				<HeroSlider
 					// make the height prop responsive for all screens
 					autoplay
 					height={
-						windowSize > 1279
+						windowSize >= 1279
 							? "900px"
 							: "900px"
 							? windowSize >= 700
