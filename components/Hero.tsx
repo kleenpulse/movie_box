@@ -25,12 +25,7 @@ const baseUrl = "http://image.tmdb.org/t/p";
 export const Hero = () => {
 	const [data, setData] = useState([]);
 
-	const [windowSize, setWindowSize] = useState(() => {
-		if (typeof window !== "undefined") {
-			return window.innerWidth;
-		}
-		return 1279;
-	});
+	const [windowSize, setWindowSize] = useState(1279);
 
 	useEffect(() => {
 		// Define your data fetching logic here
@@ -62,7 +57,7 @@ export const Hero = () => {
 			<div className="relative z-20 w-full">
 				<Nav />
 			</div>
-			<div className="absolute top-0 left-0 w-full h-full">
+			<div className="absolute top-0 left-0 w-full h-full  xl:h-[900px] min-[1440px]:h-[900px] h-[500px] sm:h-[700px] max-sm:h-[500px]">
 				<HeroSlider
 					// make the height prop responsive for all screens
 					autoplay
