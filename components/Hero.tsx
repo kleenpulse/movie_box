@@ -25,7 +25,12 @@ const baseUrl = "http://image.tmdb.org/t/p";
 export const Hero = () => {
 	const [data, setData] = useState([]);
 
-	const [windowSize, setWindowSize] = useState(0);
+	const [windowSize, setWindowSize] = useState(() => {
+		if (typeof window !== "undefined") {
+			return window.innerWidth;
+		}
+		return 1279;
+	});
 
 	useEffect(() => {
 		// Define your data fetching logic here
