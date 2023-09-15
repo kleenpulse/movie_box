@@ -2,7 +2,7 @@ import { MovieCard } from "./cards/MovieCard";
 
 import Link from "next/link";
 import LoadingAnimation from "./loaders/LoadingAnimation";
-import { fetchFeaturedMovies } from "@/app/api/data-fetcher";
+import { fetchFeaturedMovies } from "@/libs/data-fetcher";
 import { Foobar } from "./Foobar";
 
 const baseUrl = "http://image.tmdb.org/t/p";

@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { MovieCard } from "@/components/cards/MovieCard";
 import LoadingAnimation from "@/components/loaders/LoadingAnimation";
 import { Sidebar } from "@/components/Sidebar";
-import { fetchFeaturedMovies } from "../api/data-fetcher";
+import { fetchFeaturedMovies } from "../../libs/data-fetcher";
 
 const baseUrl = "http://image.tmdb.org/t/p";
 export default async function FeaturedMoviesPage() {

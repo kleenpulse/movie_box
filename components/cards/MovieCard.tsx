@@ -34,8 +34,13 @@ export const MovieCard = ({
 
 	const router = useRouter();
 	const [liked, setLiked] = useState<boolean>(() => {
-		const storedValue = localStorage.getItem(localStorageKey);
-		return storedValue ? JSON.parse(storedValue) : false;
+		// Check if localStorage is available
+		if (typeof localStorage !== "undefined") {
+			const storedValue = localStorage.getItem(localStorageKey);
+			return storedValue ? JSON.parse(storedValue) : false;
+		} else {
+			return false; // Default value when localStorage is not available
+		}
 	});
 	// Use useEffect to save the liked state to localStorage whenever it changes
 	// Also prefetch the details route

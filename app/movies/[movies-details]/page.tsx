@@ -8,7 +8,7 @@ import {
 	formatMonthAndYear,
 } from "@/constants/formatter";
 import TrendingMoviesCard from "@/components/cards/TrendingMoviesCard";
-import { fetchFilmDetails } from "@/app/api/data-fetcher";
+import { fetchFilmDetails } from "@/libs/data-fetcher";
 import { Metadata } from "next";
 
 export async function generateMetadata({

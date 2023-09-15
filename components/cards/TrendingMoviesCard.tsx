@@ -1,6 +1,6 @@
 import Image from "next/image";
 import listIcon from "../../public/assets/list-icon.png";
-import { fetchTrendingMovies } from "@/app/api/data-fetcher";
+import { fetchTrendingMovies } from "@/libs/data-fetcher";
 
 const baseUrl = "http://image.tmdb.org/t/p";
 export default async function TrendingMoviesCard() {

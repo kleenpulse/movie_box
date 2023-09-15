@@ -1,7 +1,7 @@
 "use client";
 export const revalidate = 86400;
 
-import { fetchTrendingMovies } from "@/app/api/data-fetcher";
+import { fetchTrendingMovies } from "@/libs/data-fetcher";
 import { Nav } from "./Nav";
 import Image from "next/image";
 
@@ -25,7 +25,7 @@ const baseUrl = "http://image.tmdb.org/t/p";
 export const Hero = () => {
 	const [data, setData] = useState([]);
 
-	const [windowSize, setWindowSize] = useState(window.innerWidth);
+	const [windowSize, setWindowSize] = useState(0);
 
 	useEffect(() => {
 		// Define your data fetching logic here
@@ -38,10 +38,14 @@ export const Hero = () => {
 				console.error("Error fetching data:", error);
 			});
 		const handleWindowResize = () => {
-			setWindowSize(window.innerWidth);
+			if (typeof window !== "undefined") {
+				setWindowSize(window.innerWidth);
+			}
 		};
 
-		window.addEventListener("resize", handleWindowResize);
+		if (typeof window !== "undefined") {
+			window.addEventListener("resize", handleWindowResize);
+		}
 
 		return () => {
 			window.removeEventListener("resize", handleWindowResize);
