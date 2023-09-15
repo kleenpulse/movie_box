@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import SearchLoader from "./loaders/SearchLoader";
 import Link from "next/link";
 import { formatMonthAndYear } from "@/constants/formatter";
 import { genres } from "@/constants/genres";
+
+import closeIcon from "../public/assets/close.svg";
+import searchIcon from "../public/assets/search.svg";
 
 const baseUrl = "http://image.tmdb.org/t/p";
 export const Nav = () => {
@@ -32,7 +35,7 @@ export const Nav = () => {
 				console.error("Error fetching data:", response.statusText);
 			} else {
 				const data = await response.json();
-				console.log(data.results);
+
 				setResults(data.results);
 			}
 		} catch (error) {
@@ -48,7 +51,6 @@ export const Nav = () => {
 			setResults([]);
 		}
 	}, [query]);
-	console.log(results, results.length);
 
 	return (
 		<>
@@ -65,9 +67,16 @@ export const Nav = () => {
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 					/>
-					<button className="absolute right-6 pointer-events-none">
+					<button
+						className={`absolute right-6 ${
+							query.length > 0 ? "cursor-pointer" : "cursor-not-allowed"
+						} `}
+						disabled={!query.length}
+						onClick={() => setQuery("")}
+						title={query.length > 0 ? "Clear" : "type something"}
+					>
 						<Image
-							src={"/assets/search.svg"}
+							src={query.length > 0 ? closeIcon : searchIcon}
 							width={20}
 							height={20}
 							alt="search"
@@ -101,7 +110,7 @@ export const Nav = () => {
 						{results.length > 0 ? (
 							results.map((movie) => (
 								<div
-									className="lg:flex justify-start items-start gap-4 hidden w-full max-w-lg  bg-black/20 h-[500px] xl:h-full backdrop-blur-2xl rounded-b-3xl py-2"
+									className="lg:flex justify-start items-start gap-4 hidden w-full max-w-lg  bg-black/20 h-[500px] xl:h-full backdrop-blur-2xl rounded-3xl py-2"
 									key={movie.id}
 								>
 									<Link
