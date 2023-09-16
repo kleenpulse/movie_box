@@ -1,9 +1,22 @@
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React from "react";
+
+import React, { useEffect } from "react";
 
 export const ErrorCard = ({ reset }: { reset: () => void }) => {
-	const router = useRouter();
+	const handleError = () => {
+		resetThePage();
+	};
+
+	function resetThePage() {
+		if (typeof window !== "undefined") {
+			window.location.reload();
+		}
+	}
+	useEffect(() => {
+		// refresh the page
+		handleError();
+	}, []);
+
 	return (
 		<div
 			id="error-wrapper"
@@ -16,10 +29,10 @@ export const ErrorCard = ({ reset }: { reset: () => void }) => {
 				Error
 			</h1>
 			<div className="text-center uppercase leading-8 z-50">
-				<h2 className="text-2xl sm:text-3xl xl:text-4xl">
-					We can't find that page OR Something went wrong
+				<h2 className="text-2xl sm:text-4xl xl:text-5xl mb-6">
+					Something went wrong
 				</h2>
-				<p className="tracking-wide">
+				<p className="tracking-wide mx-3">
 					We're fairly sure that page used to be here, but seems to have gone
 					missing. We do apologise on it's behalf.
 				</p>
@@ -67,7 +80,7 @@ export const ErrorCard = ({ reset }: { reset: () => void }) => {
 							Try again
 						</button>
 						<button
-							onClick={() => router.refresh()}
+							onClick={handleError}
 							className="border border-gray-200 rounded-full p-2 px-4 uppercase flex gap-2 items-center justify-center"
 						>
 							<svg

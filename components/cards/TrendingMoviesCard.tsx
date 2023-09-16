@@ -25,8 +25,8 @@ export default async function TrendingMoviesCard() {
 
 	const month = months[new Date().getUTCMonth()];
 	return (
-		<div className="flex h-[400px] max-lg:h-[500px] p-4 w-full ">
-			<div className="flex h-[229px] w-full min-w-[360px] max-lg:justify-center rounded-xl overflow-hidden gap-1 relative">
+		<div className="flex h-[400px] max-lg:h-[500px] p-4 w-full max-sm:justify-center ">
+			<div className="flex h-[229px] w-full min-w-[360px] max-lg:justify-center rounded-xl overflow-hidden gap-1 relative max-sm:px-1">
 				{trending.slice(0, 3).map((movie: any) => (
 					<Image
 						key={movie.id}

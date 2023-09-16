@@ -1,9 +1,6 @@
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React from "react";
 
 export const Error404 = () => {
-	const router = useRouter();
 	return (
 		<div
 			id="error-wrapper"
@@ -11,18 +8,17 @@ export const Error404 = () => {
 		>
 			<h1
 				id="error-heading"
-				className="text-[5rem] sm:text-[10rem] xl:text-[15rem] uppercase"
+				className="text-[7rem] sm:text-[12rem] xl:text-[17rem] uppercase"
 			>
-				Error
+				404
 			</h1>
 			<div className="text-center uppercase leading-8 z-50">
-				<h2 className="text-2xl sm:text-3xl xl:text-4xl">
+				<h1 className="text-[3rem] sm:text-[6rem] xl:text-[10rem] uppercase">
+					not found
+				</h1>
+				<h2 className="text-2xl sm:text-3xl xl:text-4xl mt-10">
 					We can't find that page OR Something went wrong
 				</h2>
-				<p className="tracking-wide">
-					We're fairly sure that page used to be here, but seems to have gone
-					missing. We do apologise on it's behalf.
-				</p>
 
 				<div className="mt-4 sm:mt-8">
 					<div className="flex w-full justify-center gap-3">

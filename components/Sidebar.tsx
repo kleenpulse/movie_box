@@ -15,7 +15,7 @@ export const Sidebar = () => {
 	const activeLink = getActiveLink(currPath);
 
 	return (
-		<section className="fixed top-0 left-0 min-h-screen hidden lg:flex flex-col  items-center w-[226px] xl:w-[300px] border-r border-gray-400/90 py-4 lg:py-8 rounded-r-[3rem]">
+		<section className="!fixed top-0 left-0 min-h-screen hidden lg:flex flex-col  items-center w-[226px] xl:w-[300px] border-r border-gray-400/90 py-4 lg:py-8 rounded-r-[3rem]">
 			<Link
 				href={"/"}
 				className="flex w-full justify-start pl-8 items-center gap-4"
