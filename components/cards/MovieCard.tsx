@@ -117,7 +117,7 @@ export const MovieCard = ({
 					</p>
 					<p className="flex items-center gap-2">
 						<Image src={"/assets/imdb.png"} width={40} height={20} alt="imdb" />
-						{imdb}/100
+						{imdb}/10
 					</p>
 				</div>
 				<p data-testid="movie-title" className="mt-1 font-bold capitalize">

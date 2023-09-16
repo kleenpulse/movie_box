@@ -10,6 +10,7 @@ import {
 import TrendingMoviesCard from "@/components/cards/TrendingMoviesCard";
 import { fetchFilmDetails } from "@/libs/data-fetcher";
 import { Metadata } from "next";
+import MobileNav from "@/components/MobileNav";
 
 export async function generateMetadata({
 	searchParams,
@@ -69,6 +70,9 @@ export default async function FeaturedMovies({
 	};
 
 	const youtubeId = movieData.trailer[0].key;
+	console.log("=======================");
+	console.log(movieData.budget);
+	console.log("=======================");
 
 	const seen = new Set();
 	const uniqueWritters = movieData.writers.filter(
@@ -80,8 +84,9 @@ export default async function FeaturedMovies({
 	);
 
 	return (
-		<main className="w-full flex justify-center items-center relative">
+		<main className="w-full flex justify-center items-center relative max-lg:flex-col">
 			<Sidebar />
+			<MobileNav />
 			<section className="max-container pt-6 px-6 min-h-screen w-full lg:ml-[226px] xl:ml-[300px] flex justify-between items-center flex-col pb-6">
 				{!movieData ? (
 					<div className="flex w-full justify-center items-center flex-col h-screen">
@@ -166,58 +171,66 @@ export default async function FeaturedMovies({
 								</p>
 								<p className="flex gap-2 flex-wrap">
 									{movieData.writers.length > 1 ? "Writers: " : "Writer: "}
-									{uniqueWritters.map(
-										(
-											writer: { id: number; name: string },
-											index: number,
-											uniqueWritters: { id: number; name: string }[]
-										) => {
-											if (index === uniqueWritters.length - 1) {
-												return (
-													<span className="text-rose-700 font-medium">
-														{writer.name}
-													</span>
-												);
-											} else {
-												return (
-													<span className="text-rose-700 font-medium">
-														{writer.name},
-													</span>
-												);
+									{uniqueWritters
+										.slice(0, 3)
+										.map(
+											(
+												writer: { id: number; name: string },
+												index: number,
+												uniqueWritters: { id: number; name: string }[]
+											) => {
+												if (index === uniqueWritters.length - 1) {
+													return (
+														<span className="text-rose-700 font-medium">
+															{writer.name}
+														</span>
+													);
+												} else {
+													return (
+														<span className="text-rose-700 font-medium">
+															{writer.name},
+														</span>
+													);
+												}
 											}
-										}
-									)}
+										)}
 								</p>
 								<p className="flex gap-2 flex-wrap">
-									Stars:
-									{movieData.stars.map(
-										(
-											star: { id: number; name: string },
-											index: number,
-											stars: { id: number; name: string }[]
-										) => {
-											if (index === stars.length - 1) {
-												return (
-													<span className="text-rose-700 font-medium">
-														{star.name}
-													</span>
-												);
-											} else {
-												return (
-													<span className="text-rose-700 font-medium">
-														{star.name},
-													</span>
-												);
+									Top Stars:
+									{movieData.stars
+										.slice(0, 3)
+										.map(
+											(
+												star: { id: number; name: string },
+												index: number,
+												stars: { id: number; name: string }[]
+											) => {
+												if (index === stars.length - 1) {
+													return (
+														<span className="text-rose-700 font-medium">
+															{star.name}
+														</span>
+													);
+												} else {
+													return (
+														<span className="text-rose-700 font-medium">
+															{star.name},
+														</span>
+													);
+												}
 											}
-										}
-									)}
+										)}
 								</p>
 								<div className="flex gap-4">
 									<p>
 										Budget:
 										<span className="text-blue-700 font-medium">
 											{" "}
-											${formatCurrencyUSD(Number(movieData.budget))}{" "}
+											{Number(movieData.budget) === 0
+												? "N/A"
+												: `$${formatCurrencyUSD(
+														Number(movieData.budget)
+												  )}`}{" "}
 										</span>
 									</p>
 									<p>
@@ -230,7 +243,11 @@ export default async function FeaturedMovies({
 											}`}
 										>
 											{" "}
-											${formatCurrencyUSD(Number(movieData.revenue))}
+											{Number(movieData.revenue) === 0
+												? "N/A"
+												: `$${formatCurrencyUSD(
+														Number(movieData.revenue)
+												  )}`}{" "}
 										</span>
 									</p>
 								</div>
