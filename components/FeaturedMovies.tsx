@@ -2,12 +2,12 @@ import { MovieCard } from "./cards/MovieCard";
 
 import Link from "next/link";
 import LoadingAnimation from "./loaders/LoadingAnimation";
-import { fetchFeaturedMovies } from "@/libs/data-fetcher";
+import { fetchFeaturedMovies, fetchTrendingMovies } from "@/libs/data-fetcher";
 import { Foobar } from "./Foobar";
 
 const baseUrl = "http://image.tmdb.org/t/p";
 export default async function FeaturedMovies() {
-	const data = await fetchFeaturedMovies(true);
+	const data = await fetchTrendingMovies(true);
 	const movies = data.results;
 
 	return (
@@ -40,6 +40,14 @@ export default async function FeaturedMovies() {
 							movieId={movie.id}
 						/>
 					))}
+					<div>
+						<Link
+							href={"/movies"}
+							className="flex items-center gap-2 text-rose-700  sm:text-[1.25rem] max-sm:bg-white rounded-full  p-1 max-sm:font-bold max-sm:hover:bg-rose-700 max-sm:hover:text-white max-sm:border border-rose-700 transition-all duration-200 text-sm"
+						>
+							See more <span>&gt;</span>
+						</Link>
+					</div>
 				</div>
 			)}
 		</section>

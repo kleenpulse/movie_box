@@ -1,11 +1,14 @@
 import { MovieCard } from "@/components/cards/MovieCard";
 import LoadingAnimation from "@/components/loaders/LoadingAnimation";
 import { Sidebar } from "@/components/Sidebar";
-import { fetchFeaturedMovies } from "../../libs/data-fetcher";
+import {
+	fetchFeaturedMovies,
+	fetchTrendingMovies,
+} from "../../libs/data-fetcher";
 
 const baseUrl = "http://image.tmdb.org/t/p";
 export default async function FeaturedMoviesPage() {
-	const data = await fetchFeaturedMovies(true);
+	const data = await fetchTrendingMovies(true);
 	const movies = data.results;
 
 	return (
@@ -14,7 +17,7 @@ export default async function FeaturedMoviesPage() {
 			<section className="max-container pt-6 px-6 min-h-screen w-full lg:ml-[226px] flex justify-between items-center flex-col pb-6">
 				<div className="flex w-full justify-center items-center">
 					<p className="font-bold text-[2.25rem] text-slate-800 uppercase">
-						Top Rated Movies
+						Popular Movies
 					</p>
 				</div>
 
