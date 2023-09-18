@@ -134,7 +134,7 @@ export const Hero = () => {
 													alt="search"
 												/>
 												<span className="text-gray-300">
-													{movie.vote_average * 10}/100
+													{movie.vote_average}/10
 												</span>
 											</p>
 											<p className="flex items-center gap-2 ml-8 text-lg">
@@ -151,15 +151,11 @@ export const Hero = () => {
 										</div>
 										<div className="w-full max-w-sm mt-6 md:max-w-[400px] xl:max-w-[550px] flex justify-center flex-col items-center md:items-start max-md:text-center ">
 											<div className="text-gray-100 sm:text-xl">
-												{windowSize < 768 ? (
-													<p>
-														{movie.overview && movie.overview.length > 140
-															? movie.overview.slice(0, 140) + "...."
-															: movie.overview}
-													</p>
-												) : (
-													<p>{movie.overview}</p>
-												)}
+												<p>
+													{movie.overview && movie.overview.length > 140
+														? movie.overview.slice(0, 140) + "...."
+														: movie.overview}
+												</p>
 											</div>
 
 											<Link

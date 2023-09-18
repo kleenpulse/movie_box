@@ -11,9 +11,9 @@ export default async function FeaturedMovies() {
 	const movies = data.results;
 
 	return (
-		<section className="max-container pt-6 px-6 xl:px-12 min-h-screen w-full flex justify-center items-center flex-col pb-6">
+		<section className="max-container pt-6 px-6 xl:px-12 min-h-screen w-full flex justify-center items-center flex-col pb-6 mt-4 sm:mt-6">
 			<div className="flex w-full justify-between items-center">
-				<p className="font-bold text-[22px] uppercase sm:text-[2.25rem] text-slate-800 ">
+				<p className="font-bold text-[22px] uppercase sm:text-[2.25rem] text-slate-800  mb-4 sm:mb-6 lg:mb-8 xl:mb-12">
 					Featured Movies
 				</p>
 				<Link
