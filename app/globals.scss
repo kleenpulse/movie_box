@@ -159,3 +159,32 @@ body {
 		background-position: 200% 0;
 	}
 }
+
+.top-star {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	--bg-star: #cccccc;
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		right: 0;
+		height: 2px;
+		width: 40%;
+		background: var(--bg-star);
+		z-index: -1;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		height: 2px;
+		width: 40%;
+		background: var(--bg-star);
+		z-index: -1;
+	}
+}

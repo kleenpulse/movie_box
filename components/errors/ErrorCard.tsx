@@ -38,7 +38,7 @@ export const ErrorCard = ({ reset }: { reset: () => void }) => {
 				</p>
 
 				<div className="mt-4 sm:mt-8">
-					<div className="flex w-full justify-center gap-3">
+					<div className="flex w-full justify-center gap-3 max-sm:flex-col max-sm:items-center">
 						<Link
 							href="/"
 							className="border border-gray-200 rounded-full px-4 py-2 w-fit flex gap-2 items-center justify-center"
