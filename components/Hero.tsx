@@ -55,7 +55,7 @@ export const Hero = () => {
 	}, []);
 
 	return (
-		<section className="w-full xl:h-[900px] min-[1440px]:h-[900px] h-[500px] sm:h-[700px] max-sm:h-[500px]  bg-cover bg-no-repeat px-8 xl:bg-center pt-4  relative bg-black/20">
+		<section className="w-full xl:h-[900px] min-[1440px]:h-[900px] h-[500px] sm:h-[700px] max-sm:h-[450px]  bg-cover bg-no-repeat px-3 sm:px-8 xl:bg-center pt-4  relative bg-black/20">
 			<div className="relative z-20 w-full">
 				<Nav />
 			</div>
@@ -71,7 +71,7 @@ export const Hero = () => {
 								? "700px"
 								: "700px"
 								? windowSize >= 300 && windowSize <= 640
-									? "500px"
+									? "450px"
 									: "700px"
 								: "700px"
 							: "900px"
@@ -122,10 +122,10 @@ export const Hero = () => {
 							<div className="relative z-40 h-full bg-black/10">
 								<div className="flex w-full justify-start items-center h-full text-gray-50 bg-black/30 ">
 									<div className="flex flex-col items-center md:items-start w-full md:max-w-[500px] md:pl-10 xl:max-w-[700px] xl:pl-12">
-										<p className="  font-bold text-white xl:text-[5rem] text-[48px] xl:leading-[90px] leading-[56px]">
+										<p className="  font-bold text-white xl:text-[5rem] sm:text-[48px] xl:leading-[90px] leading-[56px] text-2xl max-sm:uppercase">
 											{movie.title}
 										</p>
-										<div className="flex justify-between items-center mt-6">
+										<div className="flex justify-between items-center sm:mt-6">
 											<p className="flex items-center gap-2 text-lg">
 												<Image
 													src={"/assets/imdb.png"}
@@ -149,8 +149,8 @@ export const Hero = () => {
 												</span>
 											</p>
 										</div>
-										<div className="w-full max-w-sm mt-6 md:max-w-[400px] xl:max-w-[550px] flex justify-center flex-col items-center md:items-start max-md:text-center ">
-											<div className="text-gray-100 sm:text-xl">
+										<div className="w-full max-w-sm mt-4 sm:mt-6 md:max-w-[400px] xl:max-w-[550px] flex justify-center flex-col items-center md:items-start max-md:text-center ">
+											<div className="text-gray-100 sm:text-xl max-sm:w-full max-sm:px-2">
 												<p>
 													{movie.overview && movie.overview.length > 140
 														? movie.overview.slice(0, 140) + "...."

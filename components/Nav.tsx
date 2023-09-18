@@ -54,10 +54,10 @@ export const Nav = () => {
 
 	return (
 		<>
-			<nav className="flex justify-between items-center text-white py-2  w-full relative">
+			<nav className="flex justify-between items-center text-white py-2  w-full relative ">
 				<div className="flex items-center gap-4">
 					<Image src={"/assets/tv.png"} width={40} height={40} alt="logo" />
-					<span>MovieBox</span>
+					<span className="max-sm:hidden">MovieBox</span>
 				</div>
 				<form className="lg:flex items-center gap-4 hidden w-full max-w-[32.8125rem] relative ">
 					<input
@@ -84,7 +84,7 @@ export const Nav = () => {
 					</button>
 				</form>
 				<div className="flex items-center gap-4">
-					<button>Sign in</button>
+					<button className="max-sm:hidden">Sign in</button>
 					<Image
 						src={"/assets/burger.svg"}
 						width={40}
